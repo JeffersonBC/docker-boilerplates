@@ -1,7 +1,9 @@
+# Dev image
+
 FROM openjdk:8-jre
 
-# Versão Grails
-ENV GRAILS_VERSION 3.3.4
+# Set Grails version
+ARG GRAILS_VERSION=3.3.4
 
 # Instala o Grails
 WORKDIR /usr/lib/jvm
@@ -14,25 +16,31 @@ RUN wget https://github.com/grails/grails-core/releases/download/v$GRAILS_VERSIO
 ENV GRAILS_HOME /usr/lib/jvm/grails
 ENV PATH $GRAILS_HOME/bin:$PATH
 
-# Cria usuário
-RUN groupadd user &&\
-    useradd -g user -d /home/user -s /sbin/nologin -c "Docker image user" user
-
-# Cria e popula diretório de trabalho, dá permissão ao novo usuário e loga como o novo usuário
+# Copy the app's folder to /app inside the container
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
 
-# Define pasta para cache
+# Define the cache folder
 RUN mkdir /cache
 ENV GRADLE_USER_HOME /cache
 
-# Inicia a aplicação
+# Compile the app
 RUN grails compile
 
-RUN chown -R user:user /app
-RUN chown -R user:user /cache
+# Create a new user with the UID and GID provided by the docker-compose file,
+# or use 1000 as default if nothing was provided
+ARG UNAME=user
+ARG UID=1000
+ARG GID=1000
 
-USER user
+RUN groupadd -g $GID $UNAME && \
+    useradd -u $UID -g $UNAME -d /home/$UNAME -s /sbin/nologin -c "Docker image user" $UNAME
 
+RUN chown -R $UNAME:$UNAME /app
+RUN chown -R $UNAME:$UNAME /cache
+
+USER $UNAME
+
+# Run the app
 CMD [ "grails", "run-app", "--stacktrace" ]

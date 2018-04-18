@@ -1,0 +1,50 @@
+# Prod image
+
+# Building step =============
+FROM openjdk:8-jre as builder
+
+# Set Grails version
+ARG GRAILS_VERSION=3.3.4
+
+# Update alpine to properly run wget with https
+# RUN apk update
+# RUN apk add ca-certificates
+# RUN update-ca-certificates
+
+# Instal Grails
+WORKDIR /usr/lib/jvm
+
+RUN wget https://github.com/grails/grails-core/releases/download/v$GRAILS_VERSION/grails-$GRAILS_VERSION.zip && \
+    unzip grails-$GRAILS_VERSION.zip && \
+    rm -rf grails-$GRAILS_VERSION.zip && \
+    ln -s grails-$GRAILS_VERSION grails
+
+ENV GRAILS_HOME /usr/lib/jvm/grails
+ENV PATH $GRAILS_HOME/bin:$PATH
+
+# Copy the app's folder to /app inside the container
+RUN mkdir /app
+COPY . /app
+
+# Define the cache folder as /cache inside the container
+RUN mkdir /cache
+ENV GRADLE_USER_HOME /cache
+
+# Build the war file
+WORKDIR /app
+RUN grails war
+RUN mv /app/build/libs/app*.war.original /app/build/libs/app.war.original
+RUN mv /app/build/libs/app*.war /app/build/libs/app.war
+
+
+# Running step ==============
+FROM openjdk:8-jre-alpine as runner
+
+EXPOSE 8080
+
+# Copy built war file to /build
+RUN mkdir /build
+COPY --from=builder /app/build/libs/* /build/
+
+# Run the app
+CMD ["java", "-jar", "/build/app.war"]
