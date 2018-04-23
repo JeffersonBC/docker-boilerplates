@@ -4,7 +4,7 @@ services:
   grails:
     build:
       context: ./app
-      # dockerfile: Dockerfile        # Dev image
+      dockerfile: Dockerfile          # Dev image
       # dockerfile: Dockerfile-prod   # Prod image
       args:
         # UNAME: user             # Name of the user running grails inside the container (defaults to 'user')
@@ -15,5 +15,7 @@ services:
     # Comment when running in prod
     volumes:
       - ./app:/app
+      - /app/build                # Un-map /app/build directory from the mounted volume
+
     ports:
       - 8080:8080
