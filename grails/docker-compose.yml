@@ -8,8 +8,8 @@ services:
       # dockerfile: Dockerfile-prod   # Prod image
       args:
         # UNAME: user             # Name of the user running grails inside the container (defaults to 'user')
-        UID: 1001                 # Change to your own user's UID before building (defaults to '1000')
-        GID: 1001                 # Change to your own user's GID before building (defaults to '1000')
+        UID: 1000                 # Change to your own user's UID before building (defaults to '1000')
+        GID: 1000                 # Change to your own user's GID before building (defaults to '1000')
         # GRAILS_VERSION: 3.3.4   # Grails version used (defaults to '3.3.4')
 
     # Comment when running in prod

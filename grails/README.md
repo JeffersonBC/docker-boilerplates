@@ -8,11 +8,9 @@ Also, here I only use one docker-compose file to make it easier to see the diffe
 
 If you are starting a new Grails project and want it running as a Docker container feel free to copy this folder, but if you already have a Grails project and wish to "dockerize" it then you are probably looking for the [docker-compose.yml](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/docker-compose.yml) file and for the [development](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/app/Dockerfile) and [production](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/app/Dockerfile-prod) Dockerfiles.
 
-## Getting Started
-
 ### Prerequisites
 
-The only prerequisite to run this project is to have Docker and Docker Compose installed in your machine. Grails itself will be run from inside the container.
+The only prerequisite to run this project is to have Docker and Docker Compose installed in your machine. Grails itself will run from inside the container.
 
 ### Installing
 
