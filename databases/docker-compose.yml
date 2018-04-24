@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  adminer: # Service to visualize/ manipulate a data base using a web browser
+    image: adminer:4.6.2-standalone
+    ports:
+      - 8090:8080
+
+
+  postgres:
+    image: postgres:10.3
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    # REMEMBER TO CHANGE TO REAL VALUES BEFORE UPPING A PRODUCTION CONTAINER
+    environment:
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_USER: 'user'
+      POSTGRES_DB: 'db_name'
+
+
+volumes:
+  postgres_data:
+    driver: local
