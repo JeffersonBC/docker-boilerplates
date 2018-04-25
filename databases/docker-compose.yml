@@ -2,13 +2,14 @@ version: '3'
 
 services:
   adminer: # Service to visualize/ manipulate a data base using a web browser
-    image: adminer:4.6.2-standalone
+    image: adminer:4.6.2
     ports:
       - 8090:8080
 
 
   postgres:
     image: postgres:10.3
+    restart: always
     ports:
       - "5432:5432"
     volumes:
@@ -21,6 +22,24 @@ services:
       POSTGRES_DB: 'db_name'
 
 
+  mysql:
+    image: mysql:8.0.11
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    # REMEMBER TO CHANGE TO REAL VALUES BEFORE UPPING A PRODUCTION CONTAINER
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'db_name'
+
+
 volumes:
   postgres_data:
+    driver: local
+
+  mysql_data:
     driver: local
