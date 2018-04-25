@@ -37,7 +37,7 @@ services:
       MYSQL_DATABASE: 'db_name'
 
 
-  mongo:
+  mongo: # MongoDB is not supported by the current version of Adminer
     build:
       context: ./
       dockerfile: Dockerfile-Mongo
@@ -47,6 +47,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+
+    # REMEMBER TO CHANGE TO REAL VALUES BEFORE UPPING A PRODUCTION CONTAINER
     environment:
       MONGO_ROOT_USER: 'user'
       MONGO_PASSWORD: 'password'
