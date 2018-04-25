@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  adminer: # Service to visualize/ manipulate a data base using a web browser
+    image: adminer:4.6.2
+    ports:
+      - 8090:8080
+
+
+  postgres:
+    image: postgres:10.3
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    # REMEMBER TO CHANGE TO REAL VALUES BEFORE UPPING A PRODUCTION CONTAINER
+    environment:
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_USER: 'user'
+      POSTGRES_DB: 'db_name'
+
+
+  mysql:
+    image: mysql:8.0.11
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    # REMEMBER TO CHANGE TO REAL VALUES BEFORE UPPING A PRODUCTION CONTAINER
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'db_name'
+
+
+  mongo: # MongoDB is not supported by the current version of Adminer
+    build:
+      context: ./
+      dockerfile: Dockerfile-Mongo
+    restart: always
+    command: --auth --storageEngine wiredTiger
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+    # REMEMBER TO CHANGE TO REAL VALUES BEFORE UPPING A PRODUCTION CONTAINER
+    environment:
+      MONGO_ROOT_USER: 'user'
+      MONGO_PASSWORD: 'password'
+
+
+volumes:
+  postgres_data:
+    driver: local
+
+  mysql_data:
+    driver: local
+
+  mongo_data:
+    driver: local
