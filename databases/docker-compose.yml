@@ -37,9 +37,27 @@ services:
       MYSQL_DATABASE: 'db_name'
 
 
+  mongo:
+    build:
+      context: ./
+      dockerfile: Dockerfile-Mongo
+    restart: always
+    command: --auth --storageEngine wiredTiger
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_ROOT_USER: 'user'
+      MONGO_PASSWORD: 'password'
+
+
 volumes:
   postgres_data:
     driver: local
 
   mysql_data:
+    driver: local
+
+  mongo_data:
     driver: local

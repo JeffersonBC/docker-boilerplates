@@ -1,0 +1,10 @@
+FROM mongo:3.6.4-jessie
+
+ARG MONGO_ROOT_USER=user
+ARG MONGO_PASSWORD=password
+
+ENTRYPOINT ["mongo", "admin"]
+CMD ["db.createUser({ user: '$MONGO_ROOT_USER', pwd: '$MONGO_PASSWORD', roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] });"]
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["mongod"]
