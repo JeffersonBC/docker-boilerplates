@@ -4,6 +4,7 @@ Collection of clean projects in different frameworks, all configured to run as d
 
 Currently there are boilerplates for the following tools:
 
+* Angular
 * Databases
   * MongoDB
   * MySQL

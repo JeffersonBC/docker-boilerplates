@@ -6,7 +6,7 @@ It has two separate Dockerfiles for development and production because Grails's 
 
 Also, here I only use one docker-compose file to make it easier to see the difference between the enviroments, but it's probably a good idea to have two separate files, since with only one you need to edit it every time you want to go from one environment to the other, and with two files you just need to run the right one.
 
-If you are starting a new Grails project and want it running as a Docker container feel free to copy this folder, but if you already have a Grails project and wish to "dockerize" it then you are probably looking for the [docker-compose.yml](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/docker-compose.yml) file and for the [development](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/app/Dockerfile) and [production](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/app/Dockerfile-prod) Dockerfiles.
+If you are starting a new Grails project and want it running as a Docker container feel free to copy this folder, but if you already have a Grails project and wish to "dockerize" it then you are probably looking for the [docker-compose.yml](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/docker-compose.yml) file and for the [development](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/app/Dockerfile) and [production](https://github.com/JeffersonBC/docker-boilerplates/blob/master/grails/app/Dockerfile.Prod) Dockerfiles.
 
 ### Prerequisites
 
