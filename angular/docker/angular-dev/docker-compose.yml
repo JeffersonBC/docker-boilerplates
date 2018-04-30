@@ -8,4 +8,5 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./angular-app/:/code
+      - ../../angular-app/:/app
+      - /app/node_modules
