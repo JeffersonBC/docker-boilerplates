@@ -8,7 +8,9 @@ If you are starting a new Angular project and want it running in Docker this fol
 
 ### Prerequisites
 
-The only prerequisite to run this project is to have Docker and Docker Compose installed in your machine, Angular itself will run from inside the container. That being said, it's probably easier to have Angular CLI installed in your machine to work in the dev environment (alhtough it's possible to just run `ng` commands inside the container, using the container's Angular CLI installation).
+The only prerequisite to atually run this project is to have Docker and Docker Compose installed in your machine, Angular itself will run from inside the container.
+
+That being said, it's probably a good idea to have Angular CLI installed in your machine to work in the dev environment as you will need it for commands like `ng generate component <component-name>`. It would be possible to run everything inside the container if you modify the Dockerfile to have the container logged in a user with the same UID and GID as the one you are logged in your machine, and then running `npm run-script ng g c <component-name>` inside the container, but honestly that would be a lot of extra work for no extra results.
 
 ### Installing
 
