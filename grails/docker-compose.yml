@@ -5,7 +5,7 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile          # Dev image
-      # dockerfile: Dockerfile-prod   # Prod image
+      # dockerfile: Dockerfile.Prod   # Prod image
       args:
         # UNAME: user             # Name of the user running grails inside the container (defaults to 'user')
         UID: 1000                 # Change to your own user's UID before building (defaults to '1000')
