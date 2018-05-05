@@ -1,5 +1,5 @@
 # Build stage ===============
-FROM node:8.6 as node
+FROM node:8.11.1-alpine as node
 
 # Instal dependencies
 WORKDIR /app

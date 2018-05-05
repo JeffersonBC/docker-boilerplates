@@ -1,4 +1,4 @@
-FROM node:8.6
+FROM node:8.11.1-alpine
 
 # Copy package.json to inside the container and downloads all dependencies
 WORKDIR /app
