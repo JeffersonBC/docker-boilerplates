@@ -8,6 +8,7 @@ COPY package.json /app/
 COPY package-lock.json /app/
 
 RUN npm install
+RUN npm install -g purify-css
 
 # Copy code inside the container
 COPY . /app
@@ -16,6 +17,9 @@ COPY . /app
 ARG env=prod
 RUN npm run build -- --prod --environment $env
 
+# Removes unused css classes
+WORKDIR /app/dist/
+RUN purifycss styles.*.css *.js --min --out styles.*.css
 
 # Running stage =============
 FROM nginx:1.13-alpine
