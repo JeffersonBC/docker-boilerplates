@@ -10,3 +10,4 @@ Currently there are boilerplates for the following tools:
   * MySQL
   * PostgreSQL
 * Grails Framework
+* Træfik
