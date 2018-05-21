@@ -10,7 +10,7 @@ Before deploying the Træfik container its necessary to create a `proxy` network
 docker network create proxy
 ```
 
-After doing that, it's necessary to replace `<domain.com>` in the docker-compose.yml file for the real domain you will be using, and `email@server.com` in the traefik.toml file for an email you own.
+After doing that, it's necessary to replace `<domain.com>` in the docker-compose.yml file for the real domain you will be using, and `email@server.com` in the traefik.toml file for an email you own. To access the træfik monitor, it's also necessary to create a password with `htpasswd` (which is usually contained in the `apache2-utils` or `apache-tools` package) using `htpasswd -nb admin secure_password` and pasting the result inside the array of the line `users = ["admin:<password-hash>"]` in `traefik.toml`.
 
 Also, it's necessary to make sure ports 80 and 443 are exposed in the firewall.
 
