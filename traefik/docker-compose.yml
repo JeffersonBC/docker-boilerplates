@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik:1.6-alpine
+    command: --docker --logLevel=DEBUG
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    labels:
+      traefik.frontend.rule: Host:traefik-monitor.<domain.com>
+      traefik.port: "8080"
+
+networks:
+  proxy:
+    external: true
