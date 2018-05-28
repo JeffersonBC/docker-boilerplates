@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  grails:
+    build:
+      context: ../../app
+      dockerfile: Dockerfile    # Dev image
+      args:
+        GRAILS_VERSION: 3.3.4   # Grails version used (defaults to '3.3.4')
+
+    volumes:
+      - ../../app/src:/app/src
+      - ../../app/grails-app:/app/grails-app
+
+    ports:
+      - 8080:8080
