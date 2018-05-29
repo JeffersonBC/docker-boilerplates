@@ -5,17 +5,12 @@ FROM openjdk:8-jre-alpine
 # Set Grails version and user configs
 ARG GRAILS_VERSION=3.3.4
 
-ARG UNAME=user
-ARG UID=1000
-ARG GID=1000
-
 # Update alpine so wget works with https and to add the groupadd and useradd commands
 RUN apk update
 RUN apk add ca-certificates
 RUN update-ca-certificates
-RUN apk add shadow
 
-# Instals Grails
+# Instal Grails
 WORKDIR /usr/lib/jvm
 
 RUN wget https://github.com/grails/grails-core/releases/download/v$GRAILS_VERSION/grails-$GRAILS_VERSION.zip && \
@@ -31,22 +26,11 @@ RUN mkdir /app
 RUN mkdir /cache
 ENV GRADLE_USER_HOME /cache
 
-# Create a new user with the UID and GID provided by the docker-compose file,
-# or use 1000 as default if nothing was provided
-RUN groupadd -g $GID $UNAME &&\
-    useradd -u $UID -g $UNAME -d /home/$UNAME -s /sbin/nologin -c "Docker image user" $UNAME
-
 # Download dependencies
 # Create a new project and copies the build.gradle file so this step is cached unless dependencies change
 WORKDIR /app
 RUN grails create-app --inplace app --profile rest-api --features hibernate5
 
-RUN chown -R $UNAME:$UNAME /app
-RUN chown -R $UNAME:$UNAME /cache
-
-USER $UNAME
-
-WORKDIR /app
 COPY build.gradle /app/
 RUN grails dependency-report
 
